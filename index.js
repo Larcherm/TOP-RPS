@@ -1,17 +1,18 @@
 let totalRounds = 0;
 
+//main function that run when button is pressed
 function game() {
     let playerWins = 0, computerWins = 0;
     let computerChoice = getComputerChoice();
     let playerChoice = document.getElementById("pchoice").value.toLowerCase();
-    if (!validInput(playerChoice)) {
+    if (!isvalidInput(playerChoice)) {
         console.log("Problem 1");
         document.getElementById("p1").innerHTML = "Please enter rock, paper or scissors:";
         return false;
     }
-    let testp2 = document.getElementById("p2").innerHTML;
     document.getElementById("p2").innerHTML = `You chose ${playerChoice}, computer chose ${computerChoice}.`;
     let result = round(playerChoice, computerChoice);
+    //check if the total number of rounds has reached the limiti of 5 and display message accordingly
     if (totalRounds < 5) {
         if (result == "win") {
             playerWins++;
@@ -33,6 +34,7 @@ function game() {
     return;
 }
 
+//simulates computer choice based on math.ramdom function
 function getComputerChoice() {
     let x = Math.floor(Math.random() * 3) + 1;
     if (x == 1) {
@@ -44,7 +46,8 @@ function getComputerChoice() {
     }
 }
 
-function validInput(playerChoice) {
+//checks if the user input is valid
+function isvalidInput(playerChoice) {
     if (playerChoice == "rock" || playerChoice == "paper" || playerChoice == "scissors") {
         return true;
     }
@@ -53,6 +56,7 @@ function validInput(playerChoice) {
     }
 }
 
+//outputs the result of a single rounds of RPS and displays a message with the result
 function round(playerChoice, computerChoice) {
     if (playerChoice == computerChoice) {
         document.getElementById("p3").innerHTML = "It's a draw."
