@@ -1,17 +1,21 @@
-let totalRounds = 0;
+let totalRounds = 0, playerWins = 0, computerWins = 0;
+
+
+let buttons = document.querySelectorAll("button");
+
+buttons.forEach(button => button.addEventListener('click', round)); 
+
+function round() {
+
+    let computerChoice = getComputerChoice();
+    let playerChoice = this.innerHTML.toLowerCase();
+    document.getElementById("p2").innerHTML = `You chose ${playerChoice}, computer chose ${computerChoice}.`;
+    let result = simRound(playerChoice, computerChoice);
+    game(result);
+}
 
 //main function that run when button is pressed
-function game() {
-    let playerWins = 0, computerWins = 0;
-    let computerChoice = getComputerChoice();
-    let playerChoice = document.getElementById("pchoice").value.toLowerCase();
-    if (!isvalidInput(playerChoice)) {
-        console.log("Problem 1");
-        document.getElementById("p1").innerHTML = "Please enter rock, paper or scissors:";
-        return false;
-    }
-    document.getElementById("p2").innerHTML = `You chose ${playerChoice}, computer chose ${computerChoice}.`;
-    let result = round(playerChoice, computerChoice);
+function game(result) {
     //check if the total number of rounds has reached the limiti of 5 and display message accordingly
     if (totalRounds < 5) {
         if (result == "win") {
@@ -19,6 +23,7 @@ function game() {
         } else if (result == "loss") {
             computerWins++;
         }
+        document.getElementById("p2").innerHTML += ` The score is Player ${playerWins}-${computerWins} Computer`;
         totalRounds++;
     }
     if (totalRounds == 5) {
@@ -46,18 +51,10 @@ function getComputerChoice() {
     }
 }
 
-//checks if the user input is valid
-function isvalidInput(playerChoice) {
-    if (playerChoice == "rock" || playerChoice == "paper" || playerChoice == "scissors") {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
 
-//outputs the result of a single rounds of RPS and displays a message with the result
-function round(playerChoice, computerChoice) {
+
+// //outputs the result of a single rounds of RPS and displays a message with the result
+function simRound(playerChoice, computerChoice) {
     if (playerChoice == computerChoice) {
         document.getElementById("p3").innerHTML = "It's a draw."
         return "draw";
